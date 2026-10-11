@@ -1,62 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Design tokens. Channels are space-separated RGB so Tailwind can apply
+ * opacity (e.g. bg-forest/80). Only leaf and forest are confirmed brand
+ * colors; the rest are proposed and editable.
+ */
 :root {
-  --max-width: 1100px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --color-leaf: 75 168 46; /* #4BA82E Fresh Leaf Green */
+  --color-forest: 11 37 24; /* #0B2518 Deep Forest Green */
+  --color-ivory: 247 245 239; /* #F7F5EF background (proposed) */
+  --color-surface: 255 255 255; /* #FFFFFF */
+  --color-ink: 24 35 26; /* #18231A main text (proposed) */
+  --color-muted: 102 113 104; /* #667168 secondary text (proposed) */
+  --color-line: 228 232 225; /* #E4E8E1 borders (proposed) */
 
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: #CBBEFF;
-  --background-end-rgb: 255, 255, 255;
+  --radius-card: 1rem;
+  --max-width: 72rem;
 
-  --callout-rgb: 238, 240, 241;
-  --callout-border-rgb: 172, 175, 176;
-  --card-rgb: #6649AE;
-  --card-border-rgb: 131, 134, 135;
+  --font-body: var(--font-tajawal);
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-  }
+html[lang="en"] {
+  --font-body: var(--font-inter);
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   html {
-    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply min-h-screen bg-ivory font-sans text-ink antialiased;
+  }
+
+  /* Arabic script needs more line height than Latin text. */
+  html[lang="ar"] body {
+    line-height: 1.75;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-leaf;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
